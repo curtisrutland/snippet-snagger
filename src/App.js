@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import AppProvider from "providers/AppProvider";
 import Pages from "pages";
 

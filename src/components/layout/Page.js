@@ -1,43 +1,46 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import HomeIcon from '@material-ui/icons/Home';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React from "react";
+import AppBar from "@material-ui/core/AppBar";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import Hidden from "@material-ui/core/Hidden";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Link } from "@reach/router";
+import LightbulbFullIcon from "components/icons/LightbulbFull";
+import LightbulbOutlineIcon from "components/icons/LightbulbOutline";
+import { useThemeToggle } from "providers/ThemeToggleProvider";
+import { ROUTES } from "pages";
 
 const drawerWidth = 240;
 const appTitle = process.env.REACT_APP_TITLE;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
+    display: "flex",
   },
   drawer: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
       flexShrink: 0,
     },
   },
   appBar: {
     marginLeft: drawerWidth,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
   },
   menuButton: {
     marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
     },
   },
   toolbar: theme.mixins.toolbar,
@@ -59,10 +62,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Page({ children, title }) {
+export default function Page({ children, title, activeRoute }) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const themeToggle = useThemeToggle();
 
   function handleDrawerToggle() {
     setMobileOpen(!mobileOpen);
@@ -75,9 +79,18 @@ export default function Page({ children, title }) {
       </div>
       <Divider />
       <List>
-        <ListItem button component={Link} to="/">
-          <ListItemIcon><HomeIcon /></ListItemIcon>
-          <ListItemText primary="Home" />
+        {ROUTES.map(({ path, name, Icon }) => (
+          <ListItem selected={name === activeRoute} button component={Link} to={path} key={path}>
+            <ListItemIcon><Icon /></ListItemIcon>
+            <ListItemText primary={name} />
+          </ListItem>
+        ))}
+        <Divider />
+        <ListItem button onClick={themeToggle.toggleTheme}>
+          <ListItemIcon>
+            {themeToggle.theme === "light" ? <LightbulbFullIcon /> : <LightbulbOutlineIcon />}
+          </ListItemIcon>
+          <ListItemText primary={themeToggle.theme === "light" ? "Dark Theme" : "Light Theme"} />
         </ListItem>
       </List>
     </div>
@@ -103,7 +116,7 @@ export default function Page({ children, title }) {
         <Hidden smUp implementation="css">
           <Drawer
             variant="temporary"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobileOpen}
             onClose={handleDrawerToggle}
             classes={{ paper: classes.drawerPaper }}

@@ -1,27 +1,15 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { Link } from "@reach/router";
 import Page from "components/layout/Page";
+import { useThemeToggle } from "providers/ThemeToggleProvider";
 
 export default function Home() {
+  const { toggleTheme } = useThemeToggle();
   return (
-    <Page title="Home">
+    <Page title="Home" activeRoute="Home">
       <Typography>Hello World</Typography>
-      <Button component={Link} to="/test/my%20message">Test</Button>
-      <Typography style={{ margin: 200 }}>Hello World</Typography>
-      <Typography style={{ margin: 200 }}>Hello World</Typography>
-      <Typography style={{ margin: 200 }}>Hello World</Typography>
-      <Typography style={{ margin: 200 }}>Hello World</Typography>
-      <Typography style={{ margin: 200 }}>Hello World</Typography>
-      <Typography style={{ margin: 200 }}>Hello World</Typography>
-      <Typography style={{ margin: 200 }}>Hello World</Typography>
-      <Typography style={{ margin: 200 }}>Hello World</Typography>
-      <Typography style={{ margin: 200 }}>Hello World</Typography>
-      <Typography style={{ margin: 200 }}>Hello World</Typography>
-      <Typography style={{ margin: 200 }}>Hello World</Typography>
-      <Typography style={{ margin: 200 }}>Hello World</Typography>
-      <Typography style={{ margin: 200 }}>Hello World</Typography>
+      <Button variant="contained" color="primary" onClick={toggleTheme}>Toggle</Button>
     </Page>
   )
 }

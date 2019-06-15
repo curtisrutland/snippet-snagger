@@ -1,13 +1,25 @@
 import React from "react";
 import { ThemeProvider } from "@material-ui/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import theme from "theme";
+import { ThemeToggleProvider, useThemeToggle } from "./ThemeToggleProvider";
+import { getTheme } from "theme";
 
-export default function AppProvider({ children }) {
+function MaterialThemeProvider({ children }) {
+  const { theme } = useThemeToggle();
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={getTheme(theme)}>
       <CssBaseline />
       {children}
     </ThemeProvider>
+  )
+}
+
+export default function AppProvider({ children }) {
+  return (
+    <ThemeToggleProvider>
+      <MaterialThemeProvider>
+        {children}
+      </MaterialThemeProvider>
+    </ThemeToggleProvider>
   )
 }
