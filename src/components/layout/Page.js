@@ -60,6 +60,15 @@ const useStyles = makeStyles(theme => ({
     flexFlow: "column nowrap",
     alignItems: "flex-start"
   },
+  listWrapper: {
+    height: "100%",
+    display: "flex",
+    flexFlow: "column nowrap"
+  },
+  list: {
+    flexGrow: 1,
+    overflowY: "auto"
+  }
 }));
 
 export default function Page({ children, title, activeRoute }) {
@@ -73,18 +82,20 @@ export default function Page({ children, title, activeRoute }) {
   }
 
   const drawer = (
-    <div>
+    <div className={classes.listWrapper}>
       <div className={classes.title}>
         <Typography variant="h6" component={Link} to="/" color="inherit">{appTitle}</Typography>
       </div>
       <Divider />
-      <List>
+      <List className={classes.list}>
         {ROUTES.map(({ path, name, Icon }) => (
           <ListItem selected={name === activeRoute} button component={Link} to={path} key={path}>
             <ListItemIcon><Icon /></ListItemIcon>
             <ListItemText primary={name} />
           </ListItem>
         ))}
+      </List>
+      <List>
         <Divider />
         <ListItem button onClick={themeToggle.toggleTheme}>
           <ListItemIcon>
