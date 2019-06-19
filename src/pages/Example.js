@@ -1,26 +1,37 @@
 import React, { useState } from "react";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/styles";
 import Page from "components/layout/Page";
+import EditorCard from "components/Editor/EditorCard";
+import { languageMap } from "api/languages";
+
+const useStyles = makeStyles({
+  card: {
+    margin: 20,
+    height: 500,
+    width: 500
+  }
+});
+
+const ts = languageMap.get("typescript");
 
 export default function Example() {
-  const [count, setCount] = useState(0);
-
-  function increment() {
-    setCount(count + 1);
-  }
-
-  function decrement() {
-    setCount(count - 1);
-  }
-
+  // const [value, setValue] = useState("'use strict';\nconsole.log('hello world');");
+  // const [language, setLanguage] = useState("javascript");
+  const classes = useStyles();
   return (
     <Page title="Example" activeRoute="Example">
-      <Typography>Example Counter. Count: {count}</Typography>
-      <div style={{display: "flex"}}>
-        <Button variant="contained" color="secondary" onClick={decrement}>Decrement</Button>
-        <Button variant="contained" color="primary" onClick={increment}>Increment</Button>
-      </div>
+      {/* <Editor
+        readOnly
+        value={value}
+        onValueChange={setValue}
+        language={language}
+        onLaguageChange={setLanguage}
+      /> */}
+      <EditorCard
+        className={classes.card}
+        title="Example"
+        language={ts}
+        value={"console.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\nconsole.log('hello world');\n"} />
     </Page>
   )
 }

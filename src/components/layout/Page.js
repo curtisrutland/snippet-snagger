@@ -24,6 +24,7 @@ const appTitle = process.env.REACT_APP_TITLE;
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
+    height: "100%",
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
@@ -36,6 +37,7 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
+    boxShadow: theme.shadows[4]
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -55,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(1),
+    //padding: theme.spacing(1),
     display: "flex",
     flexFlow: "column nowrap",
     alignItems: "flex-start"
